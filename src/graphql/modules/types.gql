@@ -1,0 +1,26 @@
+scalar Decimal128
+scalar Date
+
+type Conta {
+    id: ID!
+    idempotencyId: ID!
+    numeroConta: String!
+    idUsuario: ID! 
+}
+
+type Transacao {
+  id: ID!
+  remetente: Conta!
+  destinatario: Conta!
+  idempotencyId: String!
+  valor: Decimal128!
+  data: Date!
+} 
+
+type User {
+    id: ID!
+    nome: String!
+    login: String!
+    token: String
+    saldo: Decimal128
+}

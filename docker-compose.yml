@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "${APP_PORT}:3000"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://${process.env.MONGO_IP}:${process.env.MONGO_PORT}/${process.env.MONGO_DATABASE}
+    volumes:
+      - .:/app
+    restart: always
+  mongo:
+    image: mongo:latest
+    ports:
+      - "${MONGO_PORT}:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: always
+  tests:
+    build: .
+    command: npm test
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+volumes:
+  mongo-data:
+

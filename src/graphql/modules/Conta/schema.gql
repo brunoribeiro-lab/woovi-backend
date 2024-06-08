@@ -1,0 +1,8 @@
+type Query {
+    accounts: [Conta!]!
+    account(userId: ID!): Conta!
+}
+
+type Mutation {
+    criarConta(userId: ID!, idempotencyId: ID!): Conta!
+}

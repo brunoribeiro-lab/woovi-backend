@@ -1,0 +1,3 @@
+type Mutation {
+    criarTransacao(remetenteId: ID!, destinatarioId: ID!, valor: Decimal128!): Transacao!
+}

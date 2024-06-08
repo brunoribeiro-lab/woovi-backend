@@ -1,0 +1,16 @@
+type Query {
+    users: [User!]!
+    user(id: ID!): User!
+}
+
+type Mutation {
+    cadastroUser(nome: String!, login: String!, senha: String!): AuthPayload!
+    removerUser(id: ID!): User!
+    login(login: String!, senha: String!): AuthPayload!
+}
+
+type AuthPayload {
+    token: String
+    user: User
+    conta: Conta
+}
