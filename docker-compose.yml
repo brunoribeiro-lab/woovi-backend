@@ -7,7 +7,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGO_URI=mongodb://${process.env.MONGO_IP}:${process.env.MONGO_PORT}/${process.env.MONGO_DATABASE}
+      - MONGO_URI=mongodb://${MONGO_IP}:${MONGO_PORT}/${MONGO_DATABASE}
     volumes:
       - .:/app
     restart: always
