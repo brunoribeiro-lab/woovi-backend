@@ -1,8 +1,7 @@
 const { ApolloError } = require('apollo-server-errors');
 const { Decimal128 } = require('mongoose').Types;
 const { v4: uuidv4 } = require('uuid');
-const { isValidObjectId } = require('mongoose');
-
+const crypto = require('crypto');
 const Conta = require('../../../models/Conta');
 const Transacao = require('../../../models/Transacao');
 const Usuario = require('../../../models/Usuario');
@@ -26,9 +25,21 @@ module.exports = {
 
       const valorFormatado = Number(valor).toFixed(2);
 
-      const idempotencyId = uuidv4();
-      const transacaoExistente = await Transacao.findOne({ idempotencyId });
-      if (transacaoExistente) throw new ApolloError('Transação já realizada com esse idempotencyId');
+      // Gerar hash usando as informações da transação (idempotencyId)
+      const hash = crypto.createHash('sha256');
+      hash.update(JSON.stringify({ remetenteId, destinatarioId, valor: valorFormatado }));
+      const idempotencyId = hash.digest('hex');
+      // Verificar transações existentes dentro do intervalo de idempotência
+      const intervaloMs = parseInt(process.env.IDPOTENCY_INTERVALO) * 1000;
+      const dataLimite = new Date(Date.now() - intervaloMs);
+      const transacaoExistente = await Transacao.findOne({
+        idempotencyId,
+        data: { $gte: dataLimite }
+      });
+
+      if (transacaoExistente) {
+        throw new ApolloError('Transação já realizada com esse idempotencyId dentro do intervalo de idempotência');
+      }
 
       const remetente = await Conta.findOne({ 'numeroConta': remetenteId });
       const destinatario = await Conta.findOne({ 'numeroConta': destinatarioId });

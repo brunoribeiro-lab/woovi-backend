@@ -17,7 +17,6 @@ const server = new ApolloServer({
   typeDefs, 
   resolvers,
   context: async ({ req }) => { 
-    console.log('token',req.headers.authorization || '');
     const token = req.headers.authorization || '';
     const JWTS = process.env.JWT_SECRET;
     const ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;

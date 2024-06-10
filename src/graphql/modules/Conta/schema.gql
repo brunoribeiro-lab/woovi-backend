@@ -4,5 +4,5 @@ type Query {
 }
 
 type Mutation {
-    criarConta(userId: ID!, idempotencyId: ID!): Conta!
+    criarConta(userId: ID!): Conta!
 }

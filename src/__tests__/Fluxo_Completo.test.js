@@ -36,7 +36,6 @@ describe('Cadastro de Usuário 1', () => {
           token
           conta {
             id
-            idempotencyId
             numeroConta
             idUsuario
           }
@@ -140,7 +139,6 @@ describe('Cadastro de Usuário 2', () => {
           token
           conta {
             id
-            idempotencyId
             numeroConta
             idUsuario
           }
@@ -198,12 +196,10 @@ describe('Transferência de R$ 50 reais do Usuário 1 para o Usuário 2', () => 
               id
               remetente { 
                 idUsuario
-                idempotencyId
                 numeroConta
               }
               destinatario { 
                 idUsuario
-                idempotencyId
                 numeroConta
               }
               idempotencyId

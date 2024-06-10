@@ -3,7 +3,6 @@ scalar Date
 
 type Conta {
     id: ID!
-    idempotencyId: ID!
     numeroConta: String!
     idUsuario: ID! 
 }

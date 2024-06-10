@@ -61,8 +61,7 @@ module.exports = {
             } while (existingAccount);
 
             // Criar uma conta para o usuário
-            const account = new Conta({
-                idempotencyId: uuidv4(),
+            const account = new Conta({ 
                 numeroConta: accountNumber,
                 idUsuario: user._id,
             });
